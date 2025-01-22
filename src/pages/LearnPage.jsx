@@ -6,15 +6,12 @@ import { VerbRender } from "../components/VerbRender";
 
 import VERBS from '../ressource/verbs.js'
 
+import { getRandomElement } from "../utils/functions.jsx";
+
 function learnPage() {
 
     const navigate = useNavigate()
     const [randomVerb, setRandomVerb] = useState(getRandomElement(VERBS))
-
-    function getRandomElement(verbList) {
-        const randomIndex = Math.floor(Math.random() * verbList.length);
-        return verbList[randomIndex];
-    }
 
     const nextVerb = () => {
         setRandomVerb(getRandomElement(VERBS))
