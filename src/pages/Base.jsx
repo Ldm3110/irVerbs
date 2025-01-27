@@ -1,22 +1,8 @@
+import { ButtonRedirect } from '../components/buttons/ButtonRedirect'
 import '../style/Base.css'
 
-import { ButtonRedirect } from '../components/ButtonRedirect'
-import { useNavigate } from 'react-router-dom'
 
 function App() {
-  const navigate = useNavigate()
-
-  const clickRedirect = (e) => {
-    const value = e.target.value
-
-    if (value === "learning") {
-      navigate('/learn')
-    } else if (value === 'exercice') {
-      navigate('/exercise')
-    } else if (value === 'search') {
-      navigate('/search')
-    }
-  }
 
   return (
     <>
@@ -25,18 +11,13 @@ function App() {
       </div>
       <p>Choisissez ce que vous voulez faire :</p>
       <div className="container d-flex justify-content-between mt-5">
-        <div>
-          <ButtonRedirect label="Apprendre" value="learning" onClick={clickRedirect} />
-        </div>
-        <div>
-          <ButtonRedirect label="Chercher un verbe" value="search" onClick={clickRedirect} />
-        </div>
-        <div>
-          <ButtonRedirect label="Se tester !" value="exercice" onClick={clickRedirect} />
-        </div>
+        <ButtonRedirect route="/learn" label="Apprendre" />
+        <ButtonRedirect route="/search" label="Chercher un verbe" />
+        <ButtonRedirect route="/exercise" label="S'entrainer" />
       </div>
     </>
   )
 }
+
 
 export default App

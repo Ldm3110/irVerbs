@@ -1,25 +1,42 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { getRandomElement } from "../utils/functions"
 import VERBS from "../ressource/verbs"
+import InputExcercise from "./InputExercise"
 
-
-const styleInput = {
-    borderRadius: '8px',
-    backgroundColor: 'white',
-    color: 'black'
-}
 
 export function FormExercise() {
 
+    // Button states
     const [jokerCounter, setJokerCounter] = useState(3)
     const [disable, setDisable] = useState(false)
     const [valid, setValid] = useState(false)
 
-    const verb = getRandomElement(VERBS)
+    // validators
+    const [base, setBase] = useState(false)
+    const [pPasse, setPartSimple] = useState(false)
+    const [pParticiple, setPastPart] = useState(false)
+
+    // Verb
+    const [verb, setNewVerb] = useState(getRandomElement(VERBS))
+
+    // functions
+    const newVerb = () => {
+        setNewVerb(getRandomElement(VERBS))
+        setValid(false)
+    }
+
+    useEffect(() => {
+        if (base == true && pPasse == true && pParticiple == true) {
+            setValid(true)
+        } else {
+            setValid(false)
+        }
+    }, [base, pPasse, pParticiple])
 
     let baseCounter = jokerCounter
     const useJoker = () => {
         setJokerCounter(baseCounter -= 1)
+        newVerb()
         if (baseCounter == 0) {
             setDisable(true)
         }
@@ -29,9 +46,9 @@ export function FormExercise() {
         <form>
             <h3 className="my-5">{verb.French}</h3>
             <div className="d-flex justify-content-between my-5">
-                <input placeholder="infinitif" type="text" name="" id="" style={styleInput} />
-                <input placeholder="Passé Simple" type="text" name="" id="" style={styleInput} />
-                <input placeholder="Participe passé" type="text" name="" id="" style={styleInput} />
+                <InputExcercise target={verb.base} placeholder="Infinitif" newState={setBase} />
+                <InputExcercise target={verb.pSimple} placeholder="Passé Simple" newState={setPartSimple} />
+                <InputExcercise target={verb.pParticiple} placeholder="Participe passé" newState={setPastPart} />
             </div>
             <div className="d-flex justify-content-around">
                 {
@@ -41,7 +58,7 @@ export function FormExercise() {
                 }
                 {
                     valid ?
-                        <button type="button">Prochain verbe</button> :
+                        <button type="button" onClick={newVerb}>Prochain verbe</button> :
                         <button type="button" disabled>Prochain verbe</button>
                 }
             </div>

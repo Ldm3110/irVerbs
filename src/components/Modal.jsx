@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { VerbRender } from './VerbRender';
+import { VerbTable } from './VerbTable';
 import VERBS from '../ressource/verbs';
 
 const style = {
@@ -39,7 +39,7 @@ export default function BasicModal({ searchTerm, filteredVerbs }) {
     return (
         <div>
             {searchTerm && filteredVerbs.length > 0 && <ul className="mt-5 list-unstyled">
-                {filteredVerbs.map(verb => (
+                {filteredVerbs.map((verb) => (
                     <li key={verb.base} onClick={handleOpen} style={styleLi}>
                         <strong>{verb.French}</strong>
                     </li>
@@ -52,7 +52,7 @@ export default function BasicModal({ searchTerm, filteredVerbs }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {<VerbRender randomVerb={verb} />}
+                    {<VerbTable randomVerb={verb} />}
                 </Box>
             </Modal>
         </div>

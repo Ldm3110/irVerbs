@@ -1,23 +1,20 @@
-export function VerbRender({ randomVerb }) {
+import { useState } from "react"
+
+import VERBS from "../ressource/verbs"
+import { getRandomElement } from "../utils/functions"
+import { ButtonNextVerb } from "../components/buttons/ButtonNextVerb"
+import { VerbTable } from "./VerbTable"
+
+export function VerbRender() {
+
+    const [randomVerb, setRandomVerb] = useState(getRandomElement(VERBS))
+
+    const nextVerb = () => {
+        setRandomVerb(getRandomElement(VERBS))
+    }
 
     return <>
-        <h4 className="mb-5"><strong>{randomVerb.French}</strong></h4>
-
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col">
-                    <p><strong>Infinitif</strong></p>
-                    <p>{randomVerb.base}</p>
-                </div>
-                <div className="col">
-                    <p><strong>Simple Past</strong></p>
-                    <p>{randomVerb.pSimple}</p>
-                </div>
-                <div className="col">
-                    <p><strong>Participe Passé</strong></p>
-                    <p>{randomVerb.pParticiple}</p>
-                </div>
-            </div>
-        </div>
+        <VerbTable randomVerb={randomVerb} />
+        <ButtonNextVerb nextVerb={nextVerb} />
     </>
 }
