@@ -30,8 +30,8 @@ export default function BasicModal({ searchTerm, filteredVerbs }) {
     const [verb, setVerb] = useState("")
 
 
-    const handleOpen = (e) => {
-        setVerb(findVerb(e.currentTarget.textContent))
+    const handleOpen = (verb) => {
+        setVerb(findVerb(verb))
         setOpen(true)
     }
     const handleClose = () => setOpen(false);
@@ -40,7 +40,7 @@ export default function BasicModal({ searchTerm, filteredVerbs }) {
         <div>
             {searchTerm && filteredVerbs.length > 0 && <ul className="mt-5 list-unstyled">
                 {filteredVerbs.map((verb) => (
-                    <li key={verb.base} onClick={handleOpen} style={styleLi}>
+                    <li key={verb.base} onClick={() => handleOpen(verb.French)} style={styleLi}>
                         <strong>{verb.French}</strong>
                     </li>
                 ))}
