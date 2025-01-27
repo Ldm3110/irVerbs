@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function InputExcercise({ target, placeholder, newState }) {
+function InputExcercise({ target, placeholder, newState, reset }) {
 
     const [value, setValue] = useState("")
 
@@ -15,12 +15,18 @@ function InputExcercise({ target, placeholder, newState }) {
     const changeValue = (e) => {
         setValue(e.target.value)
         if (e.target.value === target) {
-            console.log("true")
             newState(true)
         } else {
             newState(false)
         }
     }
+
+    useEffect(() => {
+        if (reset) {
+            setValue("");
+            newState(false);
+        }
+    }, [reset]);
 
     return <>
         <input
@@ -29,7 +35,7 @@ function InputExcercise({ target, placeholder, newState }) {
             onChange={changeValue}
             placeholder={placeholder}
             style={inputStyle}
-        />{target}
+        />
     </>
 }
 

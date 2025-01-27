@@ -19,11 +19,8 @@ export function FormExercise() {
     // Verb
     const [verb, setNewVerb] = useState(getRandomElement(VERBS))
 
-    // functions
-    const newVerb = () => {
-        setNewVerb(getRandomElement(VERBS))
-        setValid(false)
-    }
+    const [resetInputs, setResetInputs] = useState(false);
+
 
     useEffect(() => {
         if (base == true && pPasse == true && pParticiple == true) {
@@ -33,11 +30,24 @@ export function FormExercise() {
         }
     }, [base, pPasse, pParticiple])
 
-    let baseCounter = jokerCounter
+    useEffect(() => {
+        if (resetInputs) {
+            setResetInputs(false);
+        }
+    }, [resetInputs]);
+
+    // functions
+    const newVerb = () => {
+        setNewVerb(getRandomElement(VERBS))
+        setResetInputs(true)
+        setValid(false)
+    }
+
     const useJoker = () => {
-        setJokerCounter(baseCounter -= 1)
+        const updatedJokerCounter = jokerCounter - 1;
+        setJokerCounter(updatedJokerCounter)
         newVerb()
-        if (baseCounter == 0) {
+        if (updatedJokerCounter === 0) {
             setDisable(true)
         }
     }
@@ -46,9 +56,9 @@ export function FormExercise() {
         <form>
             <h3 className="my-5">{verb.French}</h3>
             <div className="d-flex justify-content-between my-5">
-                <InputExcercise target={verb.base} placeholder="Infinitif" newState={setBase} />
-                <InputExcercise target={verb.pSimple} placeholder="Passé Simple" newState={setPartSimple} />
-                <InputExcercise target={verb.pParticiple} placeholder="Participe passé" newState={setPastPart} />
+                <InputExcercise target={verb.base} placeholder="Infinitif" newState={setBase} reset={resetInputs} />
+                <InputExcercise target={verb.pSimple} placeholder="Passé Simple" newState={setPartSimple} reset={resetInputs} />
+                <InputExcercise target={verb.pParticiple} placeholder="Participe passé" newState={setPastPart} reset={resetInputs} />
             </div>
             <div className="d-flex justify-content-around">
                 {
